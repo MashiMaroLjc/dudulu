@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon"  href="{{url_for('static',
+      filename='pic/t.ico')}}">
+    <title>DuDulu</title>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',
+      filename='css/bootstrap.min.css')}}">
+    <link rel="stylesheet" type="text/css"  href="{{url_for('static',
+      filename='css/style2.css')}}">
+        <script type="text/javascript" src="{{url_for('static',
+      filename='js/jquery-2.2.0.min.js')}}"></script>
+        <script type="text/javascript" src="{{url_for('static',
+      filename='js/bootstrap.min.js')}}"></script>
+  </head>
+  
+  <body scroll="no">
+    <div  id="all" class="c_all">
+      <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse" >
+                  <span class="sr-only">navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                <div class="navbar-brand" >DuDuLu</div>
+              </div>
+              <div class="navbar-collapse collapse navbar-right">
+                <ul class="nav navbar-nav">
+                  <li><a href="https://github.com/MashiMaroLjc/dudulu">github</a></li>
+                  <li><a href="javascript:void(0)" data-toggle="modal" data-target="#about">about</a></li>              
+                </ul>
+              </div>
+      </nav>
+
+      <div class="s_div"> 
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="input-group  input-group-lg">
+                <input type="text"  class="form-control"  placeholder="Input your sentence"
+                autocomplete="off" id="sentence">
+                <span class="input-group-btn">
+                  <button class="btn btn-primary" type="button" onclick="analyze()"
+                   data-toggle="modal" data-target="#result">Analyze</button>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="about"  tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3 class="modal-title" id="myModalLabel">About</h3>
+          </div>
+          <div class="modal-body">
+            <p>
+              DuDuLu 是用于进行文本挖掘的Web Api集,目前提供一些基本的api用于获取文本的基本信息。
+              现在你看到的是用来测试情绪分析的api效果的测试页面。
+            </p>
+
+            <p >
+              使用方法:
+              </br>
+              <ul>
+                <li>在首页输入框中输入你想要分析的句子，长度为1~200</li>
+                <li>点击分析</li>
+                <li>在弹出框内观察结果,分别为该句子属于<strong>积极</strong>，
+                <strong>中性</strong>，<strong>消极</strong>的可能性</li>
+              </ul>
+              目前只支持中文
+            </p>
+
+            <p >
+              更多资料你可以访问DuDuLu的<a herf="https://github.com/MashiMaroLjc/dudulu">github</a>
+              </br>
+              本项目全部权利归&copy;<a herf="javascript:void(0)">fat rabbit</a>所有
+            </p>
+            <p>
+            ------------
+            </p>
+            <p>
+              DuDuLu ars Web Apis ,which used to Text Mining.Support some api to get basic information from text presently.You can test the api ,which used to analyze the mood from text ,on this page.
+            </p>
+
+            <p>
+              How to use:
+              </br>
+              <ul>
+                <li>Input your sentence(chinese) ,which have 1 to 200 words</li>
+                <li>Click the button named Analyze</li>
+                <li>Check the result on the  popup.The result include the possibility of 
+                <strong>positive</strong>,<strong>neutral</strong>,<strong>negative</strong></li>
+              </ul>
+              Currently only support Chinese
+            </p>
+
+            <p >
+              You can get information about DuDuLu from <a herf="https://github.com/MashiMaroLjc/dudulu">github</a>
+              </br>
+              &copy;<a herf="javascript:void(0)">fat rabbit</a> have all right of this project.
+            </p>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <div class="modal fade" id="result"  tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3 class="modal-title" id="myModalLabel">Result</h3>
+          </div>
+          <div class="modal-body">
+            <div class="list-group">
+              <a href="javascript:void(0)" class="list-group-item">
+                <strong>Your sentence:</strong>&nbsp;&nbsp;<span id="sen_model"></span>
+              </a>
+              <a href="javascript:void(0)" class="list-group-item">
+                <strong>Status:</strong>&nbsp;&nbsp;<span id="stu_model"></span>
+              </a>
+              <a href="javascript:void(0)" class="list-group-item">
+                <strong>Positive:</strong>&nbsp;&nbsp;<span id="pos_model"></span>
+              </a>
+              <a href="javascript:void(0)" class="list-group-item">
+                <strong>Negative:</strong>&nbsp;&nbsp;<span id="neg_model"></span>
+              </a>
+              <a href="javascript:void(0)" class="list-group-item">
+                <strong>Neutral:</strong>&nbsp;&nbsp;<span id="neu_model"></span>
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+  </div>
+  </body>
+  <script type="text/javascript">
+  //更改背景
+  $('#all').css({
+      "position": "absolute",
+      "height": function() {
+        return $(document).height();
+      } (),
+      "width": function() {
+        return $(document).width();
+      } (),
+      "background-size": "100%"
+    });
+
+
+  var analyze = function(){
+    var sentence_obj = $("#sentence")
+    var sub_sententce = sentence_obj.val()
+    var all_sententce = sentence_obj.val()
+    if(all_sententce.length<1){
+      $("#stu_model").text("Error!  Your sentence cannot be empty")
+      return 
+    }
+    if(sub_sententce.length>8){
+      sub_sententce = sub_sententce.substr(0,8) + "……"
+    }
+    $("#sen_model").text(sub_sententce)
+    $("#stu_model").text("Please wait……")
+    $.ajax({
+      url:"/mood?sentence="+all_sententce,
+      type: "GET",
+      success:function(data,stata){
+        try{
+          if(stata=="success"){
+            var json_obj = JSON.parse(data) 
+            //console.log(data)
+            if(json_obj["status"] == "successful"){
+              var mood_data = json_obj["data"]
+              $("#stu_model").text("Query successful.")
+              $("#pos_model").text((mood_data["positive"]*100).toFixed(3) + "%")
+              $("#neg_model").text((mood_data["negative"]*100).toFixed(3) + "%")
+              $("#neu_model").text((mood_data["neutral"]*100).toFixed(3) + "%")
+            }else{
+              var error_info = json_obj["info"]
+              $("#stu_model").text("Query error: " + error_info)
+            }
+          }else{
+            $("#stu_model").text("Error!your can look detail on console.")
+            console.log("Ajax successful,but the stata is : " + stata)
+          }  
+        }catch(e){
+          $("#stu_model").text("Error!your can look detail on console.")
+          console.log("Ajax successful,but a exception was thrown: " + e)
+        }
+  
+      },
+      error:function(XMLHttpRequest, textStatus, errorThrown) {
+        $("#stu_model").text("Error!your can look detail on console.")
+        console.log("Ajax error: " + errorThrown)
+      }
+    })
+  }
+
+
+
+
+  </script>
+
+</html>
