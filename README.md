@@ -3,6 +3,8 @@
 [中文](README-CHINEXE.md)
 -----------
 
+![logo](pic/logo.png)
+
 ##Introduction
 
 DuDuLu is a web api server used to text mining.Support some api to get basic information from text presently.I will update it when it need.
