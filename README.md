@@ -15,7 +15,8 @@ As the same time,this project was collected my another repositories.
 
 ##Version
 
-> 0.1.0
+> 0.1.1
+
 > The first number mean the version of reconstruction.The second one mean the version of
 functional.The last one mean the version of fixing bug or functional optimization.
 
@@ -92,8 +93,9 @@ And visited  ```localhost:8888``` on your brower,your can visited the page that 
 the api ,which used to analyze the mood from text
 
 ##ToDoList
-- [ ] As far as possible,use the script to finish the train of model.
-- [ ] Improved algorithm.
+- [x] As far as possible,use the script to finish the train of model.
+- [x] Improved algorithm.
+- [ ] Let User train the model together.
 
 ##Demo
 

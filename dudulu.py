@@ -17,8 +17,8 @@ SUCCEED = "successful"
 MAX_WORD = 200  # 句子最大长度
 MIN_WORD = 1  # 句子最少长度
 
-KEY_WORD = load_key_words("train/word.txt")  # 关键字列表，用于提取特征
-DATA_SETS = load_date_sets("train/train_result.json")  # 已经训练好的数据集
+KEY_WORD = load_key_words("train/new_word.txt")  # tool.py脚本产生的关键字列表，用于提取特征
+MODEL_NAME = "train/model/gnb.model"  # 已经训练好的数据集
 
 SENTENCE_FILE = open("logs/sentence.log", "a")  # 接受到的句子日志
 
@@ -88,7 +88,7 @@ def mood():
     if len(sentence) > MAX_WORD or len(sentence) < MIN_WORD:
         return Response(FAILED, None, info="The Sentence "
                                            "is too long.It should be %s to %s." % (MIN_WORD, MAX_WORD)).to_json()
-    result = get_mood(sentence, key_word=KEY_WORD, data_sets=DATA_SETS)
+    result = get_mood(sentence, key_word=KEY_WORD, model_name=MODEL_NAME)
     print("ip: %s | sentence: %s | positive: %s | negative: %s | neutral: %s" % (ip, sentence,
                                                                                  result["positive"], result["negative"],
                                                                                  result["neutral"]), file=SENTENCE_FILE)

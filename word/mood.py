@@ -2,7 +2,7 @@
 
 
 import json
-
+from sklearn.externals import joblib
 import numpy as np
 import numpy.linalg as la
 
@@ -12,7 +12,7 @@ NEUTRAL = 3  # 客观词语
 
 
 def load_key_words(file_path):
-    with open(file_path) as fp:
+    with open(file_path, encoding="utf-8") as fp:
         lines = fp.readlines()
         lines = [line.replace("\n", "") for line in lines]
     return lines
@@ -31,7 +31,7 @@ class DateSet:
 
 
 def load_date_sets(file_path):
-    with open(file_path) as f:
+    with open(file_path, encoding="utf-8") as f:
         data_list = json.load(f)
     temp = []
     for data in data_list:
@@ -68,29 +68,26 @@ def _get_feature(sentence, key_word):
     for index in range(size):
         word = key_word[index]
         value = sentence.find(word)  # 单词最初出现的位置
-        feature[index] = value
+        if value != -1:
+            feature[index] = 1
     return np.array(feature)
 
-
-def get_mood(sentence, key_word, data_sets, k=30):
+def get_mood(sentence, key_word, model_name):
     feature = _get_feature(sentence, key_word)
-    similars = []
-    for data in data_sets:
-        similar = _ecl_sim(feature, data.Data())
-        similars.append(similar)
-    # print(similars)
-    sorted_index = np.argsort(similars).tolist()
-    sorted_index.reverse()  # 从大到小后排序后取下标
-    # print(sorted_index)
-
-    size = len(sorted_index)
-    cut_size = int(size * 0.8) if size < k else k  # 列表若不超过k，只能拿8成，否则每个结果的标签都一样的，导致百分比一样
-    labels = [data_sets[sorted_index[i]].Label() for i in range(cut_size)]
-    # print(labels)
-    # print("==========")
+    gnb = joblib.load(model_name)
+    pre_y = gnb.predict([feature])
     result = {
-        "positive": labels.count(POSITIVE) / cut_size,
-        "negative": labels.count(NEGATIVE) / cut_size,
-        "neutral": labels.count(NEUTRAL) / cut_size
+        "positive":0,
+        "negative":0,
+        "neutral":0
     }
+    try:
+        if pre_y[0] == POSITIVE:
+            result["positive"] = 1
+        elif pre_y[0] == NEGATIVE:
+            result["negative"] = 1
+        elif pre_y[0] == NEUTRAL:
+            result["neutral"] = 1
+    except:
+        pass
     return result
