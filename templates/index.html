@@ -199,6 +199,9 @@
     }
     $("#sen_model").text(sub_sententce)
     $("#stu_model").text("Please wait……")
+    $("#pos_model").text("")
+    $("#neg_model").text("")
+    $("#neu_model").text("")
     $.ajax({
       url:"/mood?sentence="+all_sententce,
       type: "GET",
