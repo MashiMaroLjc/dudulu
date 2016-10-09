@@ -7,7 +7,7 @@
 
 ##Introduction
 
-DuDuLu is a web api server used to text mining.Support some api to get basic information from text presently.I will update it when it need.
+DuDuLu is a web api server  which is used to text mining.Support some api to get basic information from text presently.I will update it when it need.
 
 As the same time,this project was collected my another repositories.
 
@@ -89,8 +89,8 @@ Currently only support Chinese
 
 ```git clone``` or download the code from this page,and input ```python dudulu.py``` in correct directory.
 
-And visited  ```localhost:8888``` on your brower,your can visited the page that used to test
-the api ,which used to analyze the mood from text
+And visited  ```localhost:8888``` on your brower,your can visited the page which is used to test
+the api ,which is used to analyze the mood from text
 
 ##ToDoList
 - [x] As far as possible,use the script to finish the train of model.
